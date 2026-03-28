@@ -4,18 +4,21 @@ A dodge-survival **pygame** game with a menu, scaling difficulty, power-ups, liv
 
 ## Play in the browser (GitHub Pages)
 
-1. Push this repository to GitHub (default branch `main` or `master`).
+The workflow builds the game and pushes the site to the **`gh-pages`** branch (no “GitHub Actions” Pages source needed).
+
+1. Push **`main`** (or **`master`**). Wait until **Actions → Deploy to GitHub Pages** succeeds.
 2. Open **Settings → Pages**.
-3. Under **Build and deployment**, set **Source** to **GitHub Actions** (not “Deploy from a branch”).
-4. The workflow **Deploy to GitHub Pages** will run on push; when it finishes, open:
+3. Under **Build and deployment**, set **Source** to **Deploy from a branch**.
+4. Choose branch **`gh-pages`**, folder **`/ (root)`**, then **Save**.
+5. After a minute, open:
 
    **`https://<your-username>.github.io/<repository-name>/`**
 
-   Example: repo `dodger-game` → `https://YOURUSER.github.io/dodger-game/`
+   Example: `https://pat749.github.io/dodger-game/`
 
-5. First load can take a while while the browser caches the Python/pygame WebAssembly runtime. Use a **Chromium-based** browser for the fewest issues.
+6. First load can take a while while the browser caches the Python/pygame WebAssembly runtime. A **Chromium-based** browser works best.
 
-If the workflow is missing permission the first time, approve **Pages** deployment under the **Actions** tab when GitHub prompts you.
+**If you already enabled “GitHub Actions” as the Pages source:** switch to **Deploy from a branch** and **`gh-pages`** as above, or the new workflow will not be used by Pages.
 
 ## Run on your computer
 

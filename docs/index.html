@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Romulan War — Pages setup</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 42rem; margin: 2rem auto; padding: 0 1rem; line-height: 1.5; }
+    code { background: #f0f0f0; padding: 0.15em 0.4em; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>Romulan War</h1>
+  <p>
+    The <strong>playable game</strong> is built by GitHub Actions and published on the
+    <strong><code>gh-pages</code></strong> branch. This <code>docs/</code> folder only exists so
+    a mistaken “publish from <code>/docs</code>” setting does not break the build.
+  </p>
+  <h2>Enable the real site</h2>
+  <ol>
+    <li>Open <strong>Settings → Pages</strong> for this repository.</li>
+    <li>Under <strong>Build and deployment</strong>, set <strong>Source</strong> to
+      <strong>Deploy from a branch</strong>.</li>
+    <li>Branch: <strong>gh-pages</strong> · Folder: <strong>/ (root)</strong> · Save.</li>
+    <li>Wait a minute, then open:
+      <code>https://&lt;user&gt;.github.io/&lt;repo&gt;/</code>
+    </li>
+  </ol>
+  <p>Ensure the workflow <strong>Deploy to GitHub Pages</strong> has run successfully on <code>main</code>
+    so the <code>gh-pages</code> branch exists.</p>
+</body>
+</html>

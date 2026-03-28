@@ -20,6 +20,14 @@ The workflow builds the game and pushes the site to the **`gh-pages`** branch (n
 
 **If you already enabled “GitHub Actions” as the Pages source:** switch to **Deploy from a branch** and **`gh-pages`** as above, or the new workflow will not be used by Pages.
 
+### Troubleshooting: Jekyll / `docs` errors
+
+If **Actions** shows **pages build and deployment** failing with **`/github/workspace/docs`** or **`jekyll-build-pages`**:
+
+- Your Pages source is probably **Deploy from a branch → `main` → `/docs`**, but the game is **not** in `docs/`.
+- Fix: set Pages to **`gh-pages`** and **`/ (root)`** as in step 3 above (do **not** use **`/docs`** for this project).
+- A small **`docs/`** folder with **`.nojekyll`** is included so that misconfiguration does not crash Jekyll; it is **not** where the game runs.
+
 ## Run on your computer
 
 ```bash

@@ -1,0 +1,50 @@
+# Build the game with pygbag (WebAssembly) and publish to GitHub Pages.
+# After pushing: Repository → Settings → Pages → Build: GitHub Actions.
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install pygbag
+        run: python3 -m pip install pygbag
+
+      - name: Build web bundle
+        run: >-
+          python3 -m pygbag
+          --build
+          --title "Romulan War"
+          --package "${{ github.event.repository.name }}"
+          --disable-sound-format-error
+          game/main.py
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: game/build/web
+
+      - uses: actions/deploy-pages@v4
+        id: deploy

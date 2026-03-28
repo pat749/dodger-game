@@ -1,0 +1,2 @@
+# pygame-ce matches what pygbag uses in the browser; import name is still `pygame`.
+pygame-ce>=2.5.0,<3

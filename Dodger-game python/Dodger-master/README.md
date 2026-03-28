@@ -1,18 +1,11 @@
-Dodger
-======
+# Legacy path
 
-Space Invaders sorta game with pygame:
+The game now lives in **`game/`** at the repository root (for GitHub Pages + pygbag).
 
-This game requires python 2.7 and pygame 1.9
+You can still run:
 
-For a windows 7 64bit of pygame look here
+```bash
+python dodger.py
+```
 
-http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygame
-
-Linux versions can be compiled from source on pygame.org
-
-An RPM package is available but requires dependencies (surprise)
-
-The Debian package has 2 bugs. 
-
-And I don't have a FreeBSD machine anymore so I don't know.
+from this folder; it forwards to `game/main.py`.

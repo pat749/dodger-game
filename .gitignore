@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.Python
+.venv/
+venv/
+.env
+*.egg-info/
+.DS_Store
+game/highscores.txt
+game/build/
+game/build/web-cache/
+Dodger-game python/Dodger-master/highscores.txt

@@ -34,6 +34,7 @@ jobs:
           --build
           --title "Romulan War"
           --package "${{ github.event.repository.name }}"
+          --ume_block 0
           --disable-sound-format-error
           game/main.py
 

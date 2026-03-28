@@ -7,6 +7,7 @@ from __future__ import annotations
 import asyncio
 import math
 import pathlib
+import platform
 import random
 import sys
 from enum import Enum, auto
@@ -15,6 +16,11 @@ import pygame
 from pygame.locals import *
 
 BASE_DIR = pathlib.Path(__file__).resolve().parent
+
+
+def _is_wasm() -> bool:
+    return sys.platform == "emscripten" or platform.system() == "Emscripten"
+
 
 # Display
 WINDOWWIDTH = 880
@@ -211,7 +217,10 @@ def draw_powerup(surf: pygame.Surface, p: dict) -> None:
 
 async def main() -> None:
     pygame.init()
-    pygame.mixer.init()
+    try:
+        pygame.mixer.init()
+    except pygame.error:
+        pass
     main_clock = pygame.time.Clock()
 
     window = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
@@ -237,10 +246,13 @@ async def main() -> None:
     except pygame.error:
         pass
 
-    try:
-        pygame.mixer.music.load(str(load_asset_path("background.mid")))
-    except pygame.error:
-        pass
+    music_loaded = False
+    if not _is_wasm():
+        try:
+            pygame.mixer.music.load(str(load_asset_path("background.mid")))
+            music_loaded = True
+        except pygame.error:
+            pass
 
     player_img = pygame.image.load(str(load_asset_path("player.png"))).convert_alpha()
     romulan_img = pygame.image.load(str(load_asset_path("romulan.png"))).convert_alpha()
@@ -284,7 +296,7 @@ async def main() -> None:
     cheats_used = False
 
     def reset_match(style: PlayStyle) -> None:
-        nonlocal baddies, powerups, baddie_counter, powerup_counter, score, p1_score, p2_score, slow_until
+        nonlocal baddies, powerups, baddie_counter, powerup_counter, score, p1_score, p2_score, slow_until, music_loaded
         nonlocal p1_rect, p2_rect, p1_lives, p2_lives, p1_inv_until, p2_inv_until
         nonlocal p1_shields, p2_shields, p1_dead, p2_dead, winner_text, cheats_used
         nonlocal move_left, move_right, move_up, move_down
@@ -311,7 +323,11 @@ async def main() -> None:
         winner_text = ""
         move_left = move_right = move_up = move_down = False
         p2_left = p2_right = p2_up = p2_down = False
-        pygame.mixer.music.play(-1, 0.0)
+        if music_loaded:
+            try:
+                pygame.mixer.music.play(-1, 0.0)
+            except pygame.error:
+                pass
 
     running = True
     while running:
@@ -419,7 +435,10 @@ async def main() -> None:
             if event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
                     game_state = GameMode.MENU
-                    pygame.mixer.music.stop()
+                    try:
+                        pygame.mixer.music.stop()
+                    except pygame.error:
+                        pass
                     pygame.mouse.set_visible(True)
                     continue
                 if event.key == K_p:
@@ -698,7 +717,10 @@ async def main() -> None:
                 save_high_scores(high_1p, high_p1, high_p2)
 
         if ended:
-            pygame.mixer.music.stop()
+            try:
+                pygame.mixer.music.stop()
+            except pygame.error:
+                pass
             if game_over_sound:
                 game_over_sound.play()
             game_state = GameMode.GAME_OVER
@@ -768,5 +790,15 @@ async def main() -> None:
     terminate()
 
 
+def _launch() -> None:
+    """Desktop: asyncio.run. Web (pygbag): schedule on the embed's running loop."""
+    try:
+        loop = asyncio.get_running_loop()
+    except RuntimeError:
+        asyncio.run(main())
+    else:
+        loop.create_task(main())
+
+
 if __name__ == "__main__":
-    asyncio.run(main())
+    _launch()

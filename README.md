@@ -20,6 +20,10 @@ The workflow builds the game and pushes the site to the **`gh-pages`** branch (n
 
 **If you already enabled “GitHub Actions” as the Pages source:** switch to **Deploy from a branch** and **`gh-pages`** as above, or the new workflow will not be used by Pages.
 
+### Black screen in the browser
+
+Pygbag loads the game inside an **existing** `asyncio` loop. The game must **not** call `asyncio.run()` there; it should use `create_task` (fixed in `game/main.py`). Background **MIDI** is skipped on the web build, and the workflow uses **`--ume_block 0`** so the game is not stuck waiting for a first click for audio. After updating, push `main`, wait for the **Deploy to GitHub Pages** workflow, hard-refresh the site (Ctrl+Shift+R).
+
 ### Troubleshooting: Jekyll / `docs` errors
 
 If **Actions** shows **pages build and deployment** failing with **`/github/workspace/docs`** or **`jekyll-build-pages`**:

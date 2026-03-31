@@ -1,0 +1,78 @@
+:root {
+  --bg: #0a0e1c;
+  --panel: #12182c;
+  --text: #e8ecff;
+  --accent: #7eb8ff;
+  --gold: #ffd87a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: radial-gradient(ellipse 120% 80% at 50% 0%, #151a33, var(--bg));
+  color: var(--text);
+}
+
+#wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1rem 1rem 2rem;
+}
+
+header h1 {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  background: linear-gradient(135deg, #c5d8ff, #7eb8ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.sub {
+  margin: 0.35rem 0 0;
+  font-size: 0.9rem;
+  opacity: 0.75;
+}
+
+.sub a {
+  color: var(--accent);
+}
+
+#canvas-wrap {
+  margin-top: 1rem;
+  border-radius: 12px;
+  padding: 6px;
+  background: linear-gradient(145deg, #1a2240, #0d1224);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+}
+
+canvas#game {
+  display: block;
+  width: 100%;
+  max-width: 880px;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 8px;
+  cursor: crosshair;
+  outline: none;
+}
+
+.hint {
+  margin-top: 1rem;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  opacity: 0.65;
+}
+
+.hint code {
+  font-size: 0.85em;
+  background: var(--panel);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+}

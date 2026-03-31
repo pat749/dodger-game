@@ -1,70 +1,68 @@
 # Romulan War (Dodger)
 
-A dodge-survival **pygame** game with a menu, scaling difficulty, power-ups, lives, local **two-player versus**, and a **playable web build** on **GitHub Pages** (via [pygbag](https://github.com/pygame-web/pygbag)).
+Dodge-survival game with a **polished desktop build** (Python/pygame), a **reliable web build** (HTML5 canvas — no WebAssembly), and an **RL / ML research slice** (formal MDP + tabular Q-learning) suitable to extend for coursework or a thesis-side project.
 
 ## Play in the browser (GitHub Pages)
 
-The workflow builds the game and pushes the site to the **`gh-pages`** branch (no “GitHub Actions” Pages source needed).
+The site is served from the **`web/`** folder (plain HTML + Canvas + JavaScript). **Pygbag is no longer required** — deployment is a simple static upload.
 
-1. Push **`main`** (or **`master`**). Wait until **Actions → Deploy to GitHub Pages** succeeds.
-2. Open **Settings → Pages**.
-3. Under **Build and deployment**, set **Source** to **Deploy from a branch**.
-4. Choose branch **`gh-pages`**, folder **`/ (root)`**, then **Save**.
-5. After a minute, open:
+1. Push **`main`** and wait for **Actions → Deploy to GitHub Pages** to finish.
+2. **Settings → Pages →** source **Deploy from a branch →** **`gh-pages`** **/** **(root)**.
+3. Open **`https://<user>.github.io/<repo>/`** (e.g. `https://pat749.github.io/dodger-game/`).
 
-   **`https://<your-username>.github.io/<repository-name>/`**
+Hard-refresh after updates (**Ctrl+Shift+R**). Use a Chromium-based browser for best results.
 
-   Example: `https://pat749.github.io/dodger-game/`
-
-6. First load can take a while while the browser caches the Python/pygame WebAssembly runtime. A **Chromium-based** browser works best.
-
-**If you already enabled “GitHub Actions” as the Pages source:** switch to **Deploy from a branch** and **`gh-pages`** as above, or the new workflow will not be used by Pages.
-
-### Black screen in the browser
-
-Pygbag loads the game inside an **existing** `asyncio` loop. The game must **not** call `asyncio.run()` there; it should use `create_task` (fixed in `game/main.py`). Background **MIDI** is skipped on the web build, and the workflow uses **`--ume_block 0`** so the game is not stuck waiting for a first click for audio. After updating, push `main`, wait for the **Deploy to GitHub Pages** workflow, hard-refresh the site (Ctrl+Shift+R).
-
-### Troubleshooting: Jekyll / `docs` errors
-
-If **Actions** shows **pages build and deployment** failing with **`/github/workspace/docs`** or **`jekyll-build-pages`**:
-
-- Your Pages source is probably **Deploy from a branch → `main` → `/docs`**, but the game is **not** in `docs/`.
-- Fix: set Pages to **`gh-pages`** and **`/ (root)`** as in step 3 above (do **not** use **`/docs`** for this project).
-- A small **`docs/`** folder with **`.nojekyll`** is included so that misconfiguration does not crash Jekyll; it is **not** where the game runs.
-
-## Run on your computer
+## Run on your computer (full Python game)
 
 ```bash
 python3 -m venv .venv
-source .venv/bin/activate   # Windows: .venv\Scripts\activate
+source .venv/bin/activate
 pip install -r requirements.txt
 cd game
 python main.py
 ```
 
-You can also run `python dodger.py` from `Dodger-game python/Dodger-master/`; it forwards to `game/main.py`.
+Legacy launcher: `python dodger.py` in `Dodger-game python/Dodger-master/` (forwards to `game/main.py`).
 
-## Controls
+## Machine learning / RL baseline
 
-| Action | Keys |
-|--------|------|
-| Menu | Up/Down or W/S, Enter |
-| Quit | Esc |
-| Pause | P |
-| 1P | Mouse + WASD or arrows |
-| 2P | P1: WASD · P2: arrow keys |
+See **`ml/README.md`**. Summary:
+
+- **`ml/dodge_env.py`** — discrete dodge **MDP** (stochastic hazards, lane actions).
+- **`ml/train_q.py`** — **Q-learning** baseline; writes `ml/checkpoints/q_table.json` (gitignored).
+
+```bash
+pip install -r requirements-ml.txt
+python3 -m ml.train_q --seed 0
+```
+
+**`CITATION.cff`** is included for GitHub’s “Cite this repository” widget.
 
 ## Repository layout
 
-| Path | Purpose |
-|------|--------|
-| `game/main.py` | Game code (required name for pygbag) |
-| `game/*.png`, `*.wav`, `background.mid` | Assets |
-| `.github/workflows/github-pages.yml` | Builds and deploys the web version |
-| `requirements.txt` | `pygame-ce` for desktop |
+| Path | Role |
+|------|------|
+| `web/` | **GitHub Pages** game (canvas + JS) |
+| `game/` | Python/pygame sources + assets |
+| `ml/` | MDP + Q-learning experiments |
+| `.github/workflows/github-pages.yml` | Deploy **`web/`** → **`gh-pages`** |
+| `requirements.txt` | Desktop game (`pygame-ce`) |
+| `requirements-ml.txt` | NumPy only for `ml/` |
 
-`game/highscores.txt` is created locally when you play and is gitignored.
+## Controls (desktop & web)
+
+| | |
+|--|--|
+| Menu | ↑↓ or W/S, Enter |
+| 1P | Mouse + WASD / arrows; **Z / X** cheats (1P, desktop) |
+| 2P | P1 WASD · P2 arrows |
+| Pause | **P** · **Esc** menu |
+
+## Troubleshooting
+
+- **Old Jekyll / `docs` errors:** use **`gh-pages`** + **`/ (root)`**, not **`/docs`**, for the live game (see `docs/` note in earlier commits if applicable).
+- **Pygbag black screen:** use the **`web/`** build instead; it is the supported browser target now.
 
 ## Credits
 
-Extended from the classic Dodger-style pygame tutorial.
+Extended from the classic Dodger-style pygame tutorial; web and RL layers added for teaching and research demos.

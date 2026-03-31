@@ -1,5 +1,5 @@
-# Build with pygbag and push static files to the `gh-pages` branch.
-# No "GitHub Actions" Pages source required — use Deploy from branch (see README).
+# Publish static web game (HTML5 canvas) to gh-pages.
+# Settings → Pages → Deploy from branch → gh-pages / (root)
 
 name: Deploy to GitHub Pages
 
@@ -16,30 +16,13 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Install pygbag
-        run: python3 -m pip install pygbag
-
-      - name: Build web bundle
-        run: >-
-          python3 -m pygbag
-          --build
-          --title "Romulan War"
-          --package "${{ github.event.repository.name }}"
-          --ume_block 0
-          --disable-sound-format-error
-          game/main.py
-
-      - name: Publish to gh-pages branch
+      - name: Publish web/ to gh-pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: game/build/web
+          folder: web

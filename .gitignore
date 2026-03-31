@@ -7,6 +7,7 @@ venv/
 *.egg-info/
 .DS_Store
 game/highscores.txt
+ml/checkpoints/*.json
 game/build/
 game/build/web-cache/
 Dodger-game python/Dodger-master/highscores.txt

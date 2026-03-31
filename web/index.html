@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Romulan War — Web</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="wrap">
+    <header>
+      <h1>Romulan War</h1>
+      <p class="sub">Web build · <a href="https://github.com/pat749/dodger-game">source &amp; Python + ML</a></p>
+    </header>
+    <div id="canvas-wrap">
+      <canvas id="game" width="880" height="720" tabindex="0"></canvas>
+    </div>
+    <p id="hint" class="hint">Focus the game (click canvas) · Menu: ↑↓ or W/S · Enter · Web uses this JS build; desktop uses Python in <code>game/main.py</code></p>
+  </div>
+  <script src="game.js" type="module"></script>
+</body>
+</html>

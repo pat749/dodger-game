@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you reference this software or the RL baseline, cite as below."
+authors:
+  - family-names: Patel
+    given-names: Durgesh
+title: "Romulan War (Dodger) — pygame game with RL MDP baseline"
+version: 1.0.0
+repository-code: "https://github.com/pat749/dodger-game"
+date-released: "2026-03-28"

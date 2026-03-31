@@ -1,6 +1,6 @@
 """
-Romulan War — dodge-survival (desktop + pygbag / GitHub Pages).
-Python 3.9+, pygame or pygame-ce. Assets live next to this file.
+Romulan War — dodge-survival desktop game (pygame / pygame-ce).
+Play in the browser via the static build in `web/` (GitHub Pages), not pygbag.
 """
 from __future__ import annotations
 

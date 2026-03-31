@@ -20,7 +20,7 @@ This folder turns the dodge idea into a **small, formal MDP** and a **tabular Q-
 | **Offline RL** | Log `(s,a,r,s')` from the pygame or web game, run CQL / IQL on logs. |
 | **Imitation** | Behaviour cloning from human trajectories vs. RL policy. |
 
-## Run the baseline
+## Run the baselines
 
 From the **repository root**:
 
@@ -35,9 +35,35 @@ Defaults: **35k episodes**, **Double Q-learning**, **γ=0.99**, exponential **ε
 
 Push further (longer runs): e.g. `--episodes 80000 --alpha 0.2 --optimism 2`. A/B single-Q: `--no-double` (usually weaker).
 
+### Car ring + DQN (PyTorch)
+
+Discrete **ring-racing** MDP in **`ml/car_env.py`** (angular sector, lateral offset, speed bins). Deep Q with replay + target network:
+
+```bash
+pip install -r requirements-ml-rl.txt
+python3 -m ml.train_dqn_car --steps 20000
+```
+
+Weights: `ml/checkpoints/dqn_car.pt` (gitignored). Algorithm map: **`ml/ALGORITHMS.md`**.
+
+Evaluate greedy policy (tabular metrics on the **same** MDP as training):
+
+```bash
+python3 -m ml.eval_dqn_car --episodes 300
+python3 -m ml.eval_dqn_car --episodes 500 --log-csv ml/logs/rollouts.csv
+```
+
+**Browser inference:** export flattened weights for `web/car.js`:
+
+```bash
+python3 -m ml.export_dqn_car_web
+```
+
+This writes `web/dqn_car_policy.json` (gitignored by default; ~0.5–1 MB). Hard-refresh `car.html` so the red AI can drive with **DQN**; press **L** during a race to toggle vs the hand-tuned controller. **GitHub Pages** only serves files in the repo—either commit the JSON (remove the `web/dqn_car_policy.json` line in `.gitignore`) or copy it into `web/` on the machine that builds the site.
+
 ## Integrity
 
-- The **Python game** (`game/main.py`) and **web canvas** (`web/game.js`) are separate from this env: physics differ slightly. Treat `DodgeEnv` as a **research abstraction**; align them further if you need sim-to-real style transfer for a publication.
+- The **Python game** (`game/main.py`) and **web canvas** (`web/dodger.js` / `web/car.js`) are separate from these envs: physics differ. Treat `DodgeEnv` and `CarRingEnv` as **research abstractions**; align them further if you need sim-to-real style transfer for a publication.
 
 ## Citation
 

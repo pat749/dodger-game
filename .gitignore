@@ -8,6 +8,9 @@ venv/
 .DS_Store
 game/highscores.txt
 ml/checkpoints/*.json
+ml/checkpoints/*.pt
+web/dqn_car_policy.json
+ml/logs/*.csv
 game/build/
 game/build/web-cache/
 Dodger-game python/Dodger-master/highscores.txt

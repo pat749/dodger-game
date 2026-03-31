@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Neon Circuit — Car Arena</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    #hint-car { margin-top: 0.75rem; font-size: 0.82rem; opacity: 0.7; line-height: 1.5; }
+    code { background: #12182c; padding: 0.1em 0.35em; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <div id="wrap">
+    <header>
+      <h1>Neon Circuit</h1>
+      <p class="sub"><a href="index.html">← Arcade Lab</a> · Engine audio (Web Audio) · Human / AI / Human vs AI</p>
+    </header>
+    <div id="canvas-wrap">
+      <canvas id="car" width="880" height="720" tabindex="0"></canvas>
+    </div>
+    <p id="hint-car">
+      <strong>Click the track once</strong> to enable sound. <strong>Human:</strong> W/S throttle, A/D steer (or ↑↓←→).
+      <strong>Human vs AI:</strong> you drive the <strong>cyan</strong> car; <strong>red</strong> is the waypoint AI. First to <strong>3 laps</strong> wins.
+      <strong>AI solo:</strong> sit back and watch the red car. <a href="dodger.html">Dodger</a>
+    </p>
+  </div>
+  <script src="car.js" type="module"></script>
+</body>
+</html>

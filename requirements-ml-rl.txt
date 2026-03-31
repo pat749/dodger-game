@@ -1,0 +1,3 @@
+# Deep RL (DQN on car ring env). Use a venv; torch wheel is platform-specific.
+numpy>=1.23,<3
+torch>=2.0,<3

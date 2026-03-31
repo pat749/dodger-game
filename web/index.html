@@ -3,20 +3,66 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Romulan War — Web</title>
+  <title>Arcade Lab — Dodger &amp; Car RL</title>
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    .grid { display: grid; gap: 1.25rem; margin-top: 1.5rem; }
+    @media (min-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    .card {
+      background: linear-gradient(145deg, #1a2240, #12182c);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      border: 1px solid rgba(120, 160, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(0,0,0,.35);
+    }
+    .card h2 { margin: 0 0 0.5rem; font-size: 1.2rem; color: #c5d8ff; }
+    .card p { margin: 0 0 1rem; opacity: 0.85; font-size: 0.92rem; line-height: 1.5; }
+    .card a.btn {
+      display: inline-block;
+      padding: 0.55rem 1.1rem;
+      background: linear-gradient(180deg, #4a78d8, #3558a8);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .card a.btn:hover { filter: brightness(1.08); }
+    .tag { font-size: 0.75rem; opacity: 0.6; margin-top: 0.75rem; }
+    .ml-list { font-size: 0.88rem; line-height: 1.55; opacity: 0.9; padding-left: 1.1rem; }
+  </style>
 </head>
 <body>
   <div id="wrap">
     <header>
-      <h1>Romulan War</h1>
-      <p class="sub">Web build · <a href="https://github.com/pat749/dodger-game">source &amp; Python + ML</a></p>
+      <h1>Arcade Lab</h1>
+      <p class="sub">Dodger survival · Car arena with AI · <a href="https://github.com/pat749/dodger-game">GitHub: ML / RL / optional deep Q</a></p>
     </header>
-    <div id="canvas-wrap">
-      <canvas id="game" width="880" height="720" tabindex="0"></canvas>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Romulan War (Dodger)</h2>
+        <p>Starfield dodge-’em-up: power-ups, 2P versus, mouse + keyboard. Classic survival loop.</p>
+        <a class="btn" href="dodger.html">Play Dodger</a>
+        <p class="tag">Trains: reflex · baselines in <code>ml/dodge_env.py</code></p>
+      </div>
+      <div class="card">
+        <h2>Neon Circuit (Car)</h2>
+        <p>Oval circuit: <strong>Human</strong> drive, watch <strong>AI autopilot</strong>, or <strong>Human vs AI</strong> race (3 laps). Engine sound follows throttle. Click canvas once to unlock audio.</p>
+        <a class="btn" href="car.html">Play Car Arena</a>
+        <p class="tag">RL env: <code>ml/car_env.py</code> · Deep Q: <code>ml/train_dqn_car.py</code> (PyTorch)</p>
+      </div>
+      <div class="card" style="grid-column: 1 / -1;">
+        <h2>Machine learning stack (local / research)</h2>
+        <ul class="ml-list">
+          <li><strong>Tabular RL:</strong> Q-learning, Double Q — <code>python3 -m ml.train_q</code></li>
+          <li><strong>Deep RL:</strong> DQN + replay buffer on discrete car state — <code>pip install -r requirements-ml-rl.txt</code> then <code>python3 -m ml.train_dqn_car</code></li>
+          <li><strong>Environments:</strong> <code>ml/dodge_env.py</code> (hazards) · <code>ml/car_env.py</code> (ring racing)</li>
+          <li>Details: <a href="https://github.com/pat749/dodger-game/blob/main/ml/README.md"><code>ml/README.md</code></a> · algorithm map: <code>ml/ALGORITHMS.md</code></li>
+        </ul>
+        <a class="btn" href="https://github.com/pat749/dodger-game/tree/main/ml" style="margin-top: 0.75rem;">View <code>ml/</code> folder</a>
+      </div>
     </div>
-    <p id="hint" class="hint">Focus the game (click canvas) · Menu: ↑↓ or W/S · Enter · Web uses this JS build; desktop uses Python in <code>game/main.py</code></p>
   </div>
-  <script src="game.js" type="module"></script>
 </body>
 </html>
